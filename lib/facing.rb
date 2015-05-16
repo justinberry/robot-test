@@ -1,6 +1,6 @@
 module Facing
-  :NORTH
-  :EAST
-  :SOUTH
-  :WEST
+  NORTH = "NORTH"
+  EAST = "EAST"
+  SOUTH = "SOUTH"
+  WEST = "WEST"
 end

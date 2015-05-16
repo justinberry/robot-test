@@ -4,6 +4,6 @@ class Robot
   def initialize
     @x = 0
     @y = 0
-    @facing = 'NORTH'
+    @facing = Facing::NORTH
   end
 end
