@@ -13,6 +13,7 @@ class ControlPanel
     @robot.x = x
     @robot.y = y
     @robot.facing = facing
+    @current_facing = @facings.index(facing)
   end
 
   def left
@@ -26,12 +27,19 @@ class ControlPanel
   end
 
   def move
+    place(@robot.x, @robot.y + 1, @robot.facing) if @robot.facing == Facing::NORTH
+    place(@robot.x, @robot.y - 1, @robot.facing) if @robot.facing == Facing::SOUTH
+    place(@robot.x + 1, @robot.y, @robot.facing) if @robot.facing == Facing::EAST
+    place(@robot.x - 1, @robot.y, @robot.facing) if @robot.facing == Facing::WEST
+  end
 
+  def report
+    puts "#{@robot.x},#{@robot.y},#{@robot.facing}"
   end
 
   private
+
   def current_facing
     @facings[@current_facing % @facings.size] 
   end
-  
 end

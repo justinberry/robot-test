@@ -48,12 +48,6 @@ describe 'control panel' do
   end
 
   describe '#left' do
-    it 'rotates robot 90 degrees left' do
-      expect(robot.facing).to eq(Facing::NORTH)
-      control_panel.left()
-      expect(robot.facing).to eq(Facing::WEST)
-    end
-
     it 'performs full rotation left' do
       expect(robot.facing).to eq(Facing::NORTH)
       control_panel.left()
@@ -68,12 +62,6 @@ describe 'control panel' do
   end
 
   describe '#right' do  
-    it 'rotates robot 90 degrees right' do
-      expect(robot.facing).to eq(Facing::NORTH)
-      control_panel.right()
-      expect(robot.facing).to eq(Facing::EAST)
-    end
-
     it 'performs full rotation right' do
       expect(robot.facing).to eq(Facing::NORTH)
       control_panel.right()
@@ -88,15 +76,36 @@ describe 'control panel' do
   end
 
   describe '#move' do
-    it 'moves towards current facing' do
-      #control_panel.move()
-      skip
+    
+    it 'moves north' do
+      control_panel.place(2, 2, Facing::NORTH) 
+      control_panel.move()
+      expect(robot.y).to eq(3)
+    end
+
+    it 'moves south' do
+      control_panel.place(2, 2, Facing::SOUTH) 
+      control_panel.move()
+      expect(robot.y).to eq(1)
+    end
+
+    it 'moves east' do
+      control_panel.place(2, 2, Facing::EAST)
+      control_panel.move()
+      expect(robot.x).to eq(3)
+    end 
+
+    it 'moves west' do
+      control_panel.place(2, 2, Facing::WEST)
+      control_panel.move()
+      expect(robot.x).to eq(1)
     end
   end
 
   describe '#report' do
     it 'reports position and facing of robot' do
-      skip
+      control_panel.place(2, 3, Facing::EAST)
+      expect{ control_panel.report }.to output("2,3,EAST\n").to_stdout
     end
   end
 end 
