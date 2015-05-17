@@ -10,6 +10,8 @@ describe 'control panel' do
   let(:control_panel) { ControlPanel.new(robot) }
  
   describe '#place' do 
+    before(:each) { control_panel.place(0, 0, Facing::NORTH) }
+
     it 'places robot at location' do
       expect(robot.x).to eq(0)
       expect(robot.y).to eq(0)
@@ -36,14 +38,24 @@ describe 'control panel' do
     end
 
     it 'ignores placement of robot beyond height of the table' do
-      control_panel.place(0, 1, Facing::EAST)
+      control_panel.place(0, 1, Facing::NORTH)
       expect(robot.x).to eq(0)
       expect(robot.y).to eq(1)
 
-      control_panel.place(2, 5, Facing::EAST)
+      control_panel.place(2, 5, Facing::NORTH)
 
       expect(robot.x).to eq(0)
       expect(robot.y).to eq(1)
+    end
+
+    it 'ignores placement of robot for negative width value' do
+      control_panel.place(-1, 0, Facing::NORTH)
+      expect(robot.x).to eq(0)
+    end
+
+    it 'ignores placement of robot for negative height value' do
+      control_panel.place(0, -1, Facing::NORTH)
+      expect(robot.y).to eq(0)
     end
   end
 

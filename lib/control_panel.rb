@@ -1,4 +1,5 @@
 require 'facing'
+require 'table'
 
 class ControlPanel
   def initialize(robot)
@@ -8,6 +9,7 @@ class ControlPanel
   end
 
   def place(x, y, facing)
+    return if x < 0 || y < 0
     return if x >= Table::MAX_WIDTH || y >= Table::MAX_HEIGHT
 
     @robot.x = x
