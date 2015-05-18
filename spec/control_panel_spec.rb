@@ -20,11 +20,11 @@ describe 'control panel' do
       expect(robot.y).to eq(2)
     end
 
-    it 'sets direction of robot' do
-      expect(robot.facing).to eq(Facing::NORTH)
-      control_panel.place(1, 1, Facing::EAST) 
-      expect(robot.facing).to eq(Facing::EAST)
-    end
+    #it 'sets direction of robot' do
+    #  expect(robot.facing).to eq(Facing::NORTH)
+    #  control_panel.place(1, 1, Facing::EAST) 
+    #  expect(robot.facing).to eq(Facing::EAST)
+    #end
 
     it 'ignores placement of robot beyond width of the table' do
       control_panel.place(1, 0, Facing::EAST) 
@@ -56,34 +56,6 @@ describe 'control panel' do
     it 'ignores placement of robot for negative height value' do
       control_panel.place(0, -1, Facing::NORTH)
       expect(robot.y).to eq(0)
-    end
-  end
-
-  describe '#left' do
-    it 'performs full rotation left' do
-      expect(robot.facing).to eq(Facing::NORTH)
-      control_panel.left()
-      expect(robot.facing).to eq(Facing::WEST)
-      control_panel.left()
-      expect(robot.facing).to eq(Facing::SOUTH)
-      control_panel.left()
-      expect(robot.facing).to eq(Facing::EAST)
-      control_panel.left()
-      expect(robot.facing).to eq(Facing::NORTH)
-    end
-  end
-
-  describe '#right' do  
-    it 'performs full rotation right' do
-      expect(robot.facing).to eq(Facing::NORTH)
-      control_panel.right()
-      expect(robot.facing).to eq(Facing::EAST)
-      control_panel.right()
-      expect(robot.facing).to eq(Facing::SOUTH)
-      control_panel.right()
-      expect(robot.facing).to eq(Facing::WEST)
-      control_panel.right()
-      expect(robot.facing).to eq(Facing::NORTH)
     end
   end
 
