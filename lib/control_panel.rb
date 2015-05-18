@@ -7,11 +7,7 @@ class ControlPanel
   end
 
   def place(x, y, direction)
-    return if x < 0 || y < 0
-    return if x >= Table::MAX_WIDTH || y >= Table::MAX_HEIGHT
-
-    @robot.x = x
-    @robot.y = y
+    @robot.mover.teleport(x, y)
     @robot.facing.update(direction)
   end
 
@@ -24,10 +20,7 @@ class ControlPanel
   end
 
   def move
-    place(@robot.x, @robot.y + 1, @robot.facing.current_direction) if @robot.facing.current_direction == Facing::NORTH
-    place(@robot.x, @robot.y - 1, @robot.facing.current_direction) if @robot.facing.current_direction == Facing::SOUTH
-    place(@robot.x + 1, @robot.y, @robot.facing.current_direction) if @robot.facing.current_direction == Facing::EAST
-    place(@robot.x - 1, @robot.y, @robot.facing.current_direction) if @robot.facing.current_direction == Facing::WEST
+    @robot.mover.go()
   end
 
   def report

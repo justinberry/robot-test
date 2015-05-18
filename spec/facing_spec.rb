@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'mover'
 
 describe 'facing' do
   let(:facing) { Facing.new }

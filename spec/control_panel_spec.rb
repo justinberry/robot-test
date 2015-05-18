@@ -10,79 +10,47 @@ describe 'control panel' do
   let(:control_panel) { ControlPanel.new(robot) }
  
   describe '#place' do 
-    before(:each) { control_panel.place(0, 0, Facing::NORTH) }
-
-    it 'places robot at location' do
+    before do
       expect(robot.x).to eq(0)
       expect(robot.y).to eq(0)
+    end
+
+    it 'forwards to mover to instantly set robot position' do
+      robot.mover = double()
+      expect(robot.mover).to receive(:teleport).with(1, 2)
       control_panel.place(1, 2, Facing::NORTH) 
-      expect(robot.x).to eq(1)
-      expect(robot.y).to eq(2)
     end
 
-    #it 'sets direction of robot' do
-    #  expect(robot.facing).to eq(Facing::NORTH)
-    #  control_panel.place(1, 1, Facing::EAST) 
-    #  expect(robot.facing).to eq(Facing::EAST)
-    #end
-
-    it 'ignores placement of robot beyond width of the table' do
-      control_panel.place(1, 0, Facing::EAST) 
-      expect(robot.x).to eq(1)
-      expect(robot.y).to eq(0)
-
-      control_panel.place(5, 2, Facing::EAST) 
-
-      expect(robot.x).to eq(1)
-      expect(robot.y).to eq(0)
-    end
-
-    it 'ignores placement of robot beyond height of the table' do
-      control_panel.place(0, 1, Facing::NORTH)
-      expect(robot.x).to eq(0)
-      expect(robot.y).to eq(1)
-
-      control_panel.place(2, 5, Facing::NORTH)
-
-      expect(robot.x).to eq(0)
-      expect(robot.y).to eq(1)
-    end
-
-    it 'ignores placement of robot for negative width value' do
-      control_panel.place(-1, 0, Facing::NORTH)
-      expect(robot.x).to eq(0)
-    end
-
-    it 'ignores placement of robot for negative height value' do
-      control_panel.place(0, -1, Facing::NORTH)
-      expect(robot.y).to eq(0)
+    it 'forwards to facing to update direcotion' do
+      robot.facing = double()
+      expect(robot.facing).to receive(:update).with(Facing::EAST)
+      control_panel.place(1, 2, Facing::EAST)
     end
   end
 
   describe '#move' do
-    
-    it 'moves north' do
-      control_panel.place(2, 2, Facing::NORTH) 
-      control_panel.move()
-      expect(robot.y).to eq(3)
+   before { robot.mover = double() }    
+    it 'forwards to mover' do
+      expect(robot.mover).to receive(:go)
+      control_panel.move
+    end
+  end
+
+  context 'direction' do
+    before { robot.facing = double() }
+
+    describe '#right' do
+      it 'forwards to facing' do
+        expect(robot.facing).to receive(:turn_right)
+        control_panel.right()
+      end
     end
 
-    it 'moves south' do
-      control_panel.place(2, 2, Facing::SOUTH) 
-      control_panel.move()
-      expect(robot.y).to eq(1)
-    end
-
-    it 'moves east' do
-      control_panel.place(2, 2, Facing::EAST)
-      control_panel.move()
-      expect(robot.x).to eq(3)
-    end 
-
-    it 'moves west' do
-      control_panel.place(2, 2, Facing::WEST)
-      control_panel.move()
-      expect(robot.x).to eq(1)
+    describe '#left' do
+      it 'forwards to facing' do
+        expect(robot.facing).to receive(:turn_left)
+        control_panel.left()
+      end
     end
   end
 
